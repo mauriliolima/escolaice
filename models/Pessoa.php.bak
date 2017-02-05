@@ -1,0 +1,193 @@
+<?php
+
+namespace app\models;
+
+use Yii;
+
+/**
+ * This is the model class for table "pessoa".
+ *
+ * @property string $id_pessoa
+ * @property string $tipo_pessoa
+ * @property string $cpf_cnpj
+ * @property string $nome
+ * @property string $nome_fantasia
+ * @property string $logradouro
+ * @property string $numero
+ * @property string $complemento
+ * @property string $bairro
+ * @property integer $id_cidade
+ * @property integer $id_estado
+ * @property integer $id_pais
+ * @property string $cep
+ * @property string $numero_identidade
+ * @property string $orgao_identidade
+ * @property string $emissao_identidade
+ * @property string $data_inclusao
+ * @property string $usuario_inclusao
+ * @property string $data_alteracao
+ * @property string $usuario_alteracao
+ * @property string $id_pessoa_pai
+ * @property string $id_pessoa_mae
+ * @property string $id_pessoa_responsavel
+ * @property integer $id_prefixo_endereco
+ * @property string $data_nascimento
+ *
+ * @property Aluno[] $alunos
+ * @property Pessoa $idPessoaPai
+ * @property Pessoa[] $pessoas
+ * @property Pessoa $idPessoaMae
+ * @property Pessoa[] $pessoas0
+ * @property Pessoa $idPessoaResponsavel
+ * @property Pessoa[] $pessoas1
+ * @property PrefixoEndereco $idPrefixoEndereco
+ */
+class Pessoa extends \yii\db\ActiveRecord
+{
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'pessoa';
+    }
+	
+	const SCENARIO_ALUNO = 'aluno';
+	const SCENARIO_RESPONSAVEL = 'responsavel';
+	
+	public function scenarios()
+	{
+		return[
+			self::SCENARIO_ALUNO => ['tipo_pessoa', 'cpf_cnpj', 'nome', 'nome_fantasia', 'data_nascimento', 'id_prefixo_endereco', 'logradouro', 'numero', 'complemento', 'bairro', 'id_pais', 'id_estado', 'id_cidade', 'cep', 'numero_identidade', 'orgao_identidade', 'emissao_identidade', 'id_pessoa_pai', 'id_pessoa_mae', 'id_pessoa_responsavel', 'usuario_inclusao', 'data_inclusao', 'usuario_alteracao','data_alteracao'],
+			self::SCENARIO_RESPONSAVEL => ['tipo_pessoa', 'cpf_cnpj', 'nome', 'nome_fantasia', 'data_nascimento', 'id_prefixo_endereco', 'logradouro', 'numero', 'complemento', 'bairro', 'id_pais', 'id_estado', 'id_cidade', 'cep', 'numero_identidade', 'orgao_identidade', 'emissao_identidade', 'id_pessoa_pai', 'id_pessoa_mae', 'id_pessoa_responsavel', 'usuario_inclusao', 'data_inclusao', 'usuario_alteracao','data_alteracao'],
+		];
+	}
+	
+	
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['tipo_pessoa', 'nome', 'logradouro', 'numero', 'bairro', 'id_cidade', 'id_estado', 'cep', 'usuario_inclusao', 'id_pessoa_mae', 'id_pessoa_responsavel'], 'required', 'message' => 'O campo {attribute} deve ser preenchido', 'on' => self::SCENARIO_ALUNO],
+			[['tipo_pessoa', 'cpf_cnpj', 'nome', 'logradouro', 'numero', 'bairro', 'usuario_inclusao'], 'required', 'message' => 'O campo {attribute} deve ser preenchido', 'on' => self::SCENARIO_RESPONSAVEL],
+            [['id_cidade', 'id_estado', 'id_pais', 'id_pessoa_pai', 'id_pessoa_mae', 'id_pessoa_responsavel', 'id_prefixo_endereco'], 'integer', 'message' => 'Selecione uma valor válido'],
+            [['emissao_identidade', 'data_inclusao', 'data_alteracao', 'data_nascimento'], 'safe'],
+            [['tipo_pessoa'], 'string', 'max' => 1],
+            [['cpf_cnpj'], 'string', 'max' => 18],
+            [['nome', 'nome_fantasia'], 'string', 'max' => 150],
+            [['logradouro', 'complemento', 'bairro'], 'string', 'max' => 50],
+            [['numero', 'numero_identidade', 'orgao_identidade', 'usuario_inclusao', 'usuario_alteracao'], 'string', 'max' => 20],
+            [['cep'], 'string', 'max' => 9]
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id_pessoa' => 'Id Pessoa',
+            'tipo_pessoa' => 'Tipo Pessoa',
+            'cpf_cnpj' => 'CPF/CNPJ',
+            'nome' => 'Nome',
+            'nome_fantasia' => 'Nome Fantasia',
+            'logradouro' => 'Logradouro',
+            'numero' => 'Numero',
+            'complemento' => 'Complemento',
+            'bairro' => 'Bairro',
+            'id_cidade' => 'Cidade',
+            'id_estado' => 'Estado',
+            'id_pais' => 'País',
+            'cep' => 'CEP',
+            'numero_identidade' => 'Numero Identidade',
+            'orgao_identidade' => 'Orgao Identidade',
+            'emissao_identidade' => 'Emissao Identidade',
+            'data_inclusao' => 'Data Inclusao',
+            'usuario_inclusao' => 'Usuario Inclusao',
+            'data_alteracao' => 'Data Alteracao',
+            'usuario_alteracao' => 'Usuario Alteracao',
+            'id_pessoa_pai' => 'Nome do Pai',
+            'id_pessoa_mae' => 'Nome da Mãe',
+            'id_pessoa_responsavel' => 'Nome do Responsável',
+            'id_prefixo_endereco' => 'Prefixo',
+            'data_nascimento' => 'Data de Nascimento',
+        ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAlunos()
+    {
+        return $this->hasMany(Aluno::className(), ['id_pessoa' => 'id_pessoa']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdPessoaPai()
+    {
+        return $this->hasOne(Pessoa::className(), ['id_pessoa' => 'id_pessoa_pai']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPessoas()
+    {
+        return $this->hasMany(Pessoa::className(), ['id_pessoa_pai' => 'id_pessoa']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdPessoaMae()
+    {
+        return $this->hasOne(Pessoa::className(), ['id_pessoa' => 'id_pessoa_mae']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPessoas0()
+    {
+        return $this->hasMany(Pessoa::className(), ['id_pessoa_mae' => 'id_pessoa']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdPessoaResponsavel()
+    {
+        return $this->hasOne(Pessoa::className(), ['id_pessoa' => 'id_pessoa_responsavel']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPessoas1()
+    {
+        return $this->hasMany(Pessoa::className(), ['id_pessoa_responsavel' => 'id_pessoa']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdPrefixoEndereco()
+    {
+        return $this->hasOne(PrefixoEndereco::className(), ['id_prefixo_endereco' => 'id_prefixo_endereco']);
+    }
+
+    /**
+     * @inheritdoc
+     * @return PessoaQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new PessoaQuery(get_called_class());
+    }
+}

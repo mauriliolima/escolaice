@@ -1,0 +1,2 @@
+create a simple image in black with 2 x 2 pixels and save 
+like ponto_preto.gif

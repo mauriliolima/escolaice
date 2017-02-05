@@ -1,0 +1,75 @@
+<?php
+
+use yii\helpers\Html;
+use yii\grid\GridView;
+use yii\widgets\Pjax;
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
+
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\PessoaSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = 'Pessoas';
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="pessoa-index">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <p>
+        <?= Html::a('Inserir', ['create'], ['class' => 'btn btn-success']) 
+		?> 
+		<!-- <?= Html::button('Inserir', ['value'=>Url::to('index.php?r=pessoa/create'), 'class'=>'btn btn-success', 'id'=>'modalButton']) ?> -->
+    </p>
+
+	<?php	
+	Modal::begin([
+		'header'=>'<h4>Incluir/Editar Pessoa</h4>',
+		'id'=>'modal',
+		'size'=>'modal-lg',
+	]);
+	echo "<div id='modalContent'></div>";
+	Modal::end();
+	?>
+	
+    <?php Pjax::begin(['id' => 'PessoaGrid']); ?>
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            //'id_pessoa',
+            'tipo_pessoa',
+            'cpf_cnpj',
+            'nome',
+            //'nome_fantasia',
+            // 'logradouro',
+            // 'numero',
+            // 'complemento',
+            // 'bairro',
+            // 'id_cidade',
+            // 'id_estado',
+            // 'id_pais',
+            // 'cep',
+            // 'numero_identidade',
+            // 'orgao_identidade',
+            // 'emissao_identidade',
+            // 'data_inclusao',
+            // 'usuario_inclusao',
+            // 'data_alteracao',
+            // 'usuario_alteracao',
+            // 'id_pessoa_pai',
+            // 'id_pessoa_mae',
+            // 'id_pessoa_responsavel',
+            // 'id_prefixo_endereco',
+
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
+
+    <?php Pjax::end(); ?>
+
+</div>

@@ -1,0 +1,24 @@
+#RewriteEngine on
+# If a directory or a file exists, use it directly
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+# Otherwise forward it to index.php
+#RewriteRule . index.php
+
+Options -Indexes
+
+<IfModule mod_rewrite.c> 
+  RewriteEngine on
+
+  RewriteCond %{REQUEST_URI} !^public
+  RewriteRule ^(.*)$ web/$1 [L] 
+</IfModule>
+
+# Deny accessing below extensions
+<Files ~ "(.json|.lock|.git)">
+Order allow,deny
+Deny from all
+</Files>
+
+# Deny accessing dot files
+RewriteRule (^\.|/\.) - [F]
