@@ -1,21 +1,14 @@
-Yii 2 Basic Project Template
-============================
+Sistema de Gestão Escolar - ICE
+===============================
 
-Yii 2 Basic Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-rapidly creating small projects.
+Sistema de gestão escolar desenvolvido em PHP sobre o framework Yii2.
 
-The template contains the basic features including user login/logout and a contact page.
-It includes all commonly used configurations that would allow you to focus on adding new
-features to your application.
-
-[![Latest Stable Version](https://poser.pugx.org/yiisoft/yii2-app-basic/v/stable.png)](https://packagist.org/packages/yiisoft/yii2-app-basic)
-[![Total Downloads](https://poser.pugx.org/yiisoft/yii2-app-basic/downloads.png)](https://packagist.org/packages/yiisoft/yii2-app-basic)
-[![Build Status](https://travis-ci.org/yiisoft/yii2-app-basic.svg?branch=master)](https://travis-ci.org/yiisoft/yii2-app-basic)
 
 DIRECTORY STRUCTURE
 -------------------
 
       assets/             contains assets definition
+      barcode/            contains barcode engine components
       commands/           contains console commands (controllers)
       config/             contains application configurations
       controllers/        contains Web controller classes
@@ -23,6 +16,7 @@ DIRECTORY STRUCTURE
       models/             contains model classes
       runtime/            contains files generated during runtime
       tests/              contains various tests for the basic application
+      uploads/            contains upload files by app
       vendor/             contains dependent 3rd-party packages
       views/              contains view files for the Web application
       web/                contains the entry script and Web resources
@@ -32,7 +26,7 @@ DIRECTORY STRUCTURE
 REQUIREMENTS
 ------------
 
-The minimum requirement by this project template that your Web server supports PHP 5.4.0.
+PHP 5.4.0, MySQL 5 ou posterior
 
 
 INSTALLATION
@@ -59,26 +53,6 @@ http://localhost/basic/web/
 ~~~
 
 
-### Install via Composer
-
-If you do not have [Composer](http://getcomposer.org/), you may install it by following the instructions
-at [getcomposer.org](http://getcomposer.org/doc/00-intro.md#installation-nix).
-
-You can then install this project template using the following command:
-
-~~~
-php composer.phar global require "fxp/composer-asset-plugin:~1.0.0"
-php composer.phar create-project --prefer-dist --stability=dev yiisoft/yii2-app-basic basic
-~~~
-
-Now you should be able to access the application through the following URL, assuming `basic` is the directory
-directly under the Web root.
-
-~~~
-http://localhost/basic/web/
-~~~
-
-
 CONFIGURATION
 -------------
 
@@ -96,6 +70,4 @@ return [
 ];
 ```
 
-**NOTE:** Yii won't create the database for you, this has to be done manually before you can access it.
-
-Also check and edit the other files in the `config/` directory to customize your application.
+**IMPORTANTE:** A aplicação não cria a estrutura de banco sozinha. Utilize o arquivo de importação *escolaice.sql*.
