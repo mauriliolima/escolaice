@@ -1,7 +1,7 @@
 --
 -- PostgreSQL database dump
 --
-
+-- Alterado pelo maurilio em 09/11/2017
 -- Dumped from database version 9.4.5
 -- Dumped by pg_dump version 9.4.0
 -- Started on 2016-01-06 16:56:39
