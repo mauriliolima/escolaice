@@ -1,7 +1,7 @@
 Sistema de Gestão Escolar - ICE
 ===============================
 
-Sistema de gestão escolar desenvolvido em PHP sobre o framework Yii2.
+Sistema de gestão escolar desenvolvido em PHP sobre o framework Yii2. Alterado em 10.11.2017
 
 
 DIRECTORY STRUCTURE
